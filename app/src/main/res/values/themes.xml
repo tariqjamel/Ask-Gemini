@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AskGemini" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+ <!--       <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_variant_color</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant_color</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowBackground">@color/background_color</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item> &lt;!&ndash; For light status bar icons &ndash;&gt;
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item> &lt;!&ndash; For light navigation bar icons &ndash;&gt;-->
+
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
+
+    </style>
+
+    <style name="Theme.AskGemini" parent="Base.Theme.AskGemini" />
+
+</resources>
