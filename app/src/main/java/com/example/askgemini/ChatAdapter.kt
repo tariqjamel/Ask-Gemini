@@ -51,4 +51,8 @@ class ChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         chatList.clear()
         notifyDataSetChanged()
     }
+
+    fun getChatItem(position: Int): ChatItem {
+        return chatList[position]
+    }
 }
