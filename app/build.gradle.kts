@@ -47,5 +47,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
-
+    implementation ("com.google.android.material:material:1.6.1")
 }

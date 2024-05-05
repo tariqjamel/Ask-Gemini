@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="#64B5F6"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:title="Gemini" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-<ImageButton
-    android:id="@+id/menuButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/line32"
-    android:background="?android:attr/selectableItemBackground"
-    android:contentDescription="Menu"
-    android:onClick="buttonMoreOptions"
-    app:layout_constraintTop_toTopOf="@+id/toolbar"
-    app:layout_constraintEnd_toEndOf="@+id/toolbar"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="#64B5F6"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            app:title="Ask Gemini"
+            app:navigationIcon="@drawable/line32"/>
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recyclerView"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintTop_toBottomOf="@+id/toolbar"
-    app:layout_constraintBottom_toTopOf="@+id/editTextInput" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
 
-<EditText
-    android:id="@+id/editTextInput"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_edit"
-    android:ems="10"
-    android:hint="Input here ..."
-    android:inputType="textMultiLine"
-    android:padding="12dp"
-    android:textColor="#000000"
-    android:textColorHint="#808080"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="5dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/button"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-<ImageView
-    android:id="@+id/button"
-    android:layout_width="44dp"
-    android:layout_height="44dp"
-    android:layout_marginBottom="4dp"
-    android:onClick="buttonSendChat"
-    android:src="@drawable/blue_send"
-    android:text="Send"
-    app:layout_constraintBottom_toBottomOf="@+id/editTextInput"
-    app:layout_constraintEnd_toEndOf="parent" />
+            <EditText
+                android:id="@+id/editTextInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit"
+                android:ems="10"
+                android:hint="Input here ..."
+                android:inputType="textMultiLine"
+                android:padding="12dp"
+                android:textColor="#000000"
+                android:textColorHint="#808080" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/btnSend"
+                android:layout_width="51dp"
+                android:layout_height="46dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="buttonSendChat"
+                android:src="@drawable/blue_send"
+                android:contentDescription="Send" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
