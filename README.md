@@ -12,7 +12,7 @@ The application allows users to interact with the chat bot, view chat history, s
 - **Clear History**: Option to clear all chat history.
 
 ## Screenshot
-<img  align="left" src="main.png" width="20%" height="20%">
+<img  align="left" src="main_page.png" width="20%" height="20%">
 <img  align="left" src="navigate.png" width="20%" height="20%">
 <img  src="history.png" width="20%" height="20%">
 
