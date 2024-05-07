@@ -5,9 +5,15 @@
             android:title="New Chat" />
         <item
             android:id="@+id/nav_history"
-            android:title="History" />
+            android:title="History"/>
         <item
-            android:id="@+id/nav_help"
-            android:title="Help" />
+            android:id="@+id/nav_clear_history"
+            android:title="Clear History"
+            />
     </group>
+
+    <group android:id="@+id/group_search_history" android:checkableBehavior="none">
+
+    </group>
+
 </menu>

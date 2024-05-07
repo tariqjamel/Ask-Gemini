@@ -3,12 +3,11 @@ package com.example.askgemini
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -63,35 +62,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         editTextInput = findViewById(R.id.editTextInput)
 
-        val generativeModel = GenerativeModel(
-            modelName = "gemini-pro",
-            apiKey = API_KEY
-        )
+        startNewChat()
 
-        chat = generativeModel.startChat(
-            history = listOf(
-                content(role = "user") { text("Hello") },
-                content(role = "model") { text("Hello, how can I help you?") }
-            )
-        )
-        addChatToAdapter("Hello", true)
-        addChatToAdapter("Hello, how can I help you?", false)
+        val menu = navigationView.menu
+        menu.removeGroup(R.id.group_search_history)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_new_chat -> startNewChat()
+            R.id.nav_clear_history -> clearSearchHistory()
             R.id.nav_history -> showSearchHistory()
+            else -> {
+                val searchQuery = item.title.toString()
+                addChatToAdapter(searchQuery, true)
 
+                MainScope().launch {
+                    val result = chat.sendMessage(searchQuery)
+                    result.text?.let { addChatToAdapter(it, false) }
+                }
+            }
         }
-
-        drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     private fun startNewChat() {
-        chatAdapter.clear()
-
         val generativeModel = GenerativeModel(
             modelName = "gemini-pro",
             apiKey = API_KEY
@@ -103,10 +98,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 content(role = "model") { text("Hello, how can I help you?") }
             )
         )
-
         addChatToAdapter("Hello", true)
         addChatToAdapter("Hello, how can I help you?", false)
         chatAdapter.clear()
+        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     fun buttonSendChat(view: View) {
@@ -138,34 +133,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             editor.apply()
         }
     }
-
     private fun showSearchHistory() {
         val searchHistoryList = retrieveSearchHistory(this)
-        val historyDialog = AlertDialog.Builder(this)
-        historyDialog.setTitle("Search History")
+        val menu = navigationView.menu
 
-        historyDialog.setItems(searchHistoryList.toTypedArray()) { _, i ->
-            val searchQuery = searchHistoryList[i]
-            addChatToAdapter(searchQuery, true)
+        for ((index, searchQuery) in searchHistoryList.withIndex()) {
+            val menuItem = menu.add(R.id.group_search_history, Menu.NONE, index, searchQuery)
+            menuItem.setOnMenuItemClickListener { menuItem ->
+                drawerLayout.closeDrawer(GravityCompat.START)
+                val userMessage = menuItem.title.toString()
+                addChatToAdapter(userMessage, true)
 
-            MainScope().launch {
-                val result = chat.sendMessage(searchQuery)
-                result.text?.let { addChatToAdapter(it, false) }
+                MainScope().launch {
+                    val result = chat.sendMessage(userMessage)
+                    result.text?.let { addChatToAdapter(it, false)
+                    }
+                }
+
+                true
             }
         }
-
-        historyDialog.setPositiveButton("Clear History") { _, _ ->
-            clearSearchHistory()
-        }
-
-        historyDialog.show()
     }
 
     private fun clearSearchHistory() {
         val editor = sharedPreferences.edit()
         editor.putString("search_history", "")
         editor.apply()
+        val menu = navigationView.menu
+        menu.removeGroup(R.id.group_search_history)
         chatAdapter.clear()
+        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     private fun retrieveSearchHistory(context: Context): List<String> {

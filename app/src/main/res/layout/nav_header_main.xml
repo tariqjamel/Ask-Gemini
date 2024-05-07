@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="177dp"
         android:layout_height="166dp"
-        android:src="@drawable/ai_logo_bg"
+        android:src="@drawable/gemini_logo2"
         android:contentDescription="@string/app_name" />
 
     <TextView
