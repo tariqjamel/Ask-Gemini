@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val API_KEY = "AIzaSyCDvOqxT3TMnVslS38ToxTFFiS3JTad6Cc"
+    private val API_KEY = "Your Api Key"
     private lateinit var chat: Chat
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var recyclerView: RecyclerView
